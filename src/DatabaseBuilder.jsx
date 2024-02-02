@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   generateGraphQLSchemaa,
   generateMongooseSchemaa,
+  generateResolverss,
 } from "./SchemaGenerator";
 const DatabaseBuilder = () => {
   const [tableName, setTableName] = useState("");
@@ -30,13 +31,16 @@ const DatabaseBuilder = () => {
   const generateGraphQLSchema = () => {
     // Implement logic to generate GraphQL schema based on state
     const graphqlSchema = generateGraphQLSchemaa(tableName, fields);
-    console.log("Generated GraphQL Schema:", graphqlSchema);
   };
 
   const generateMongooseSchema = () => {
     // Implement logic to generate Mongoose schema based on state
-    const mongooseSchema = generateMongooseSchemaa(fields);
-    console.log("Generated GraphQL Schema:", mongooseSchema);
+    const mongooseSchema = generateMongooseSchemaa(tableName, fields);
+  };
+
+  const generateResolvers = () => {
+    const mongooseSchema = generateMongooseSchemaa(tableName, fields);
+    const resolvers = generateResolverss(tableName, mongooseSchema);
   };
 
   return (
@@ -72,6 +76,7 @@ const DatabaseBuilder = () => {
       </div>
 
       <button onClick={generateGraphQLSchema}>Generate GraphQL Schema</button>
+      <button onClick={generateResolvers}>Generate Resolvers</button>
       <button onClick={generateMongooseSchema}>Generate Mongoose Schema</button>
     </div>
   );
